@@ -12,6 +12,16 @@ import (
 
 var MAXINT = strconv.Itoa(int(^uint(0) >> 1))
 
+func init() {
+	env := os.Getenv("APP_ENV")
+	if env == "production" {
+		log.Println("Running api server in production mode")
+		gin.SetMode(gin.ReleaseMode)
+	} else {
+		log.Println("Running api server in dev mode")
+	}
+}
+
 func main() {
 	db.InitDb()
 	router := gin.Default()
@@ -46,14 +56,6 @@ func main() {
 
 		c.JSON(200, items)
 	})
-
-	env := os.Getenv("APP_ENV")
-	if env == "production" {
-		log.Println("Running api server in production mode")
-		gin.SetMode(gin.ReleaseMode)
-	} else {
-		log.Println("Running api server in dev mode")
-	}
 
 	router.Run(":8080")
 }
