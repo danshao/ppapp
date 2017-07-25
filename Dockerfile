@@ -11,7 +11,7 @@ RUN go build
 
 CMD if [ ${APP_ENV} = production ]; \
 	then \
-	app; \
+	ppapp; \
 	else \
 	go get github.com/pilu/fresh && \
 	fresh; \
